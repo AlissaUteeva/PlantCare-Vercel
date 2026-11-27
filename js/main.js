@@ -3,8 +3,8 @@
   "use strict";
   var PLANTS = window.PLANTS || [];
 
-  /* ---------- Ссылка на анкету: вставьте сюда адрес своей формы ---------- */
-  var SURVEY_URL = ""; // например "https://forms.gle/abc123"
+  /* ---------- Ссылка на анкету ---------- */
+  var SURVEY_URL = "https://forms.gle/wRgu3GPD23EedmZf6";
   document.querySelectorAll("[data-survey]").forEach(function (a) {
     if (SURVEY_URL) { a.href = SURVEY_URL; a.target = "_blank"; a.rel = "noopener"; }
     else { a.href = "#survey"; a.removeAttribute("target"); }
