@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PLANTCARE — уход за комнатными растениями</title>
-  <meta name="description" content="PLANTCARE — Android-приложение для ухода за комнатными растениями: база из 50 растений, напоминания о поливе и компас, который определяет солнечную сторону окна.">
+  <meta name="description" content="PLANTCARE — приложение для ухода за комнатными растениями: база из 50 растений и напоминания о поливе.">
   <meta name="theme-color" content="#24452c">
   <meta property="og:title" content="PLANTCARE — уход за комнатными растениями">
-  <meta property="og:description" content="Библиотека растений, напоминания о поливе и компас солнечной стороны в одном приложении.">
+  <meta property="og:description" content="Библиотека растений и напоминания о поливе в одном приложении.">
   <meta property="og:image" content="img/logo.png">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,6 @@
       <a href="#problem">Проблема</a>
       <a href="#audience">Для кого</a>
       <a href="#features">Возможности</a>
-      <a class="btn btn--sun btn--sm" href="#survey">Пройти анкету</a>
     </nav>
   </div>
 </header>
@@ -47,12 +46,11 @@
 
   <div class="container hero__grid">
     <div class="hero__text">
-      <p class="eyebrow"><span class="dot"></span> PLANTCARE · Android-приложение</p>
+      <p class="eyebrow"><span class="dot"></span> PLANTCARE</p>
       <h1>Каждому растению <em>своё солнце</em></h1>
       <p class="lead">PLANTCARE подскажет, когда полить монстеру, на какое окно поставить кактус и чем фикус отличается от фикуса. Библиотека растений, напоминания и компас солнечной стороны в одном приложении.</p>
       <div class="hero__cta">
-        <a class="btn btn--sun" href="#survey" data-survey>Пройти анкету · 3 минуты</a>
-        <a class="btn btn--ghost" href="#about">Узнать о проекте</a>
+        <a class="btn btn--sun" href="#about">Узнать о проекте</a>
       </div>
       <ul class="hero__stats">
         <li><b data-count="50">50</b><span>растений в базе</span></li>
@@ -84,7 +82,7 @@
       <p class="eyebrow">О проекте</p>
       <h2 class="section__title section__title--left">PLANTCARE: карманный помощник для комнатных растений</h2>
       <div class="about__grid">
-        <div class="about__item reveal"><span>Что это</span><p>Мобильное приложение для Android, которое хранит ваши растения, напоминает об уходе и подсказывает, на какое окно их лучше поставить.</p></div>
+        <div class="about__item reveal"><span>Что это</span><p>Мобильное приложение, которое хранит ваши растения, напоминает об уходе и подсказывает, на какое окно их лучше поставить.</p></div>
         <div class="about__item reveal"><span>Для кого</span><p>Для тех, у кого дома есть растения, но нет времени или опыта, чтобы помнить, как ухаживать за каждым.</p></div>
         <div class="about__item reveal"><span>Какую задачу решает</span><p>Убирает догадки из ухода: когда поливать, сколько света нужно и подходит ли растению конкретный подоконник.</p></div>
       </div>
@@ -146,7 +144,7 @@
   <div class="container">
     <p class="eyebrow eyebrow--center">Что умеет PLANTCARE</p>
     <h2 class="section__title">Ключевые возможности</h2>
-    <p class="section__sub">Четыре раздела, четыре кнопки в главном меню. Компас и базу растений можно попробовать прямо на этой странице.</p>
+    <p class="section__sub">Четыре раздела, четыре кнопки в главном меню.</p>
 
     <div class="features">
       <article class="feature reveal">
@@ -173,39 +171,6 @@
         <p>Полив, подкормка, опрыскивание и пересадка. Выберите интервал и время, а кнопка «Готово» прямо в уведомлении отметит уход и начнёт новый отсчёт.</p>
         <ul class="ticks"><li>4 типа ухода</li><li>работают после перезагрузки</li><li>можно включать и выключать</li></ul>
       </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ КОМПАС (ИНТЕРАКТИВ) ============ -->
-<section class="section section--dark" id="compass">
-  <div class="container compass">
-    <div class="compass__text">
-      <p class="eyebrow eyebrow--sun">Попробуйте прямо здесь</p>
-      <h2 class="section__title section__title--left">Куда смотрит ваше окно?</h2>
-      <p class="section__sub section__sub--left">В приложении направление определяет компас телефона. Здесь можно выбрать сторону вручную: нажмите на сторону света и посмотрите, какие растения из базы подойдут.</p>
-
-      <div class="verdict" aria-live="polite">
-        <div class="verdict__head">
-          <span class="verdict__dir" id="v-dir">Юго-восток</span>
-          <span class="badge" id="v-light">Прямое солнце</span>
-        </div>
-        <p id="v-text">Много солнца с утра до обеда. Хорошо подходит почти всем растениям, кроме тенелюбивых.</p>
-        <p class="verdict__count"><b id="v-count">0</b> растений из базы хорошо растут у такого окна:</p>
-        <ul class="tags" id="v-plants"></ul>
-      </div>
-    </div>
-
-    <div class="dial-wrap">
-      <div class="dial" id="dial" role="radiogroup" aria-label="Сторона света окна">
-        <div class="dial__ring" aria-hidden="true"></div>
-        <div class="dial__needle" id="needle" aria-hidden="true"><span></span></div>
-        <div class="dial__center" aria-hidden="true">☀</div>
-      </div>
-      <label class="hemi">
-        <input type="checkbox" id="hemi">
-        <span>Я в Южном полушарии</span>
-      </label>
     </div>
   </div>
 </section>
@@ -254,30 +219,6 @@
   </div>
 </section>
 
-<!-- ============ 7. АНКЕТА ============ -->
-<section class="section section--dark" id="survey">
-  <div class="container survey">
-    <div>
-      <p class="eyebrow eyebrow--sun">Анкета</p>
-      <h2 class="section__title section__title--left">Помогите сделать PLANTCARE полезнее!</h2>
-      <p class="section__sub section__sub--left">Мы проверяем идеи на реальных людях, прежде чем развивать приложение дальше. Ответьте на несколько вопросов о том, как вы ухаживаете за растениями. Это займёт около 3 минут и анонимно.</p>
-      <div class="hero__cta">
-        <a class="btn btn--sun" href="#survey" data-survey target="_blank" rel="noopener">Пройти анкету</a>
-      </div>
-    </div>
-    <div class="hypotheses">
-      <h3>Что мы хотим проверить</h3>
-      <ol>
-        <li><b>Гипотеза 1.</b> Люди чаще всего губят растения из-за забытого или неправильного полива.</li>
-        <li><b>Гипотеза 2.</b> Большинство не знает, на какую сторону света выходят их окна и сколько там солнца.</li>
-        <li><b>Гипотеза 3.</b> Напоминания с кнопкой «Готово» удобнее, чем заметки и будильники в телефоне.</li>
-        <li><b>Гипотеза 4.</b> Пользователям важна база с советами по уходу на русском языке.</li>
-      </ol>
-      <p class="hypotheses__note">По результатам анкеты будет решено, какие функции развивать первыми.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ============ 8. ФИНАЛ И КОНТАКТЫ ============ -->
 <section class="section" id="contacts">
   <div class="container">
@@ -287,7 +228,6 @@
       <h2>PLANTCARE: каждому растению своё солнце</h2>
       <p>Приложение, которое помнит о поливе, знает 50 растений и находит для каждого подходящее окно. Проект в разработке, и ваш опыт поможет сделать его лучше.</p>
       <div class="hero__cta hero__cta--center">
-        <a class="btn btn--sun" href="#survey" data-survey target="_blank" rel="noopener">Пройти анкету</a>
         <a class="btn btn--ghost" href="https://github.com/" target="_blank" rel="noopener" id="gh-link">Проект на GitHub</a>
       </div>
       <ul class="contacts">
