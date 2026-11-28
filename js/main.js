@@ -1,14 +1,7 @@
-/* PLANTCARE — лендинг: меню, компас, поиск по базе, анимации */
+/* PLANTCARE — лендинг: меню, поиск по базе, анимации */
 (function () {
   "use strict";
   var PLANTS = window.PLANTS || [];
-
-  /* ---------- Ссылка на анкету ---------- */
-  var SURVEY_URL = "https://forms.gle/wRgu3GPD23EedmZf6";
-  document.querySelectorAll("[data-survey]").forEach(function (a) {
-    if (SURVEY_URL) { a.href = SURVEY_URL; a.target = "_blank"; a.rel = "noopener"; }
-    else { a.href = "#survey"; a.removeAttribute("target"); }
-  });
 
   /* ---------- Шапка: фон при скролле и мобильное меню ---------- */
   var nav = document.querySelector(".nav");
@@ -28,110 +21,12 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* ---------- Компас: та же логика, что в SunMath.kt ---------- */
-  var DIRS = [
-    { id: "N",  short: "С",  title: "Север",       az: 0 },
-    { id: "NE", short: "СВ", title: "Северо-восток", az: 45 },
-    { id: "E",  short: "В",  title: "Восток",      az: 90 },
-    { id: "SE", short: "ЮВ", title: "Юго-восток",  az: 135 },
-    { id: "S",  short: "Ю",  title: "Юг",          az: 180 },
-    { id: "SW", short: "ЮЗ", title: "Юго-запад",   az: 225 },
-    { id: "W",  short: "З",  title: "Запад",       az: 270 },
-    { id: "NW", short: "СЗ", title: "Северо-запад", az: 315 }
-  ];
-  var VERDICT = {
-    S:  ["DIRECT",  "Самое солнечное окно: солнце светит большую часть дня. Летом в полдень может обжигать нежные листья."],
-    SE: ["DIRECT",  "Много солнца с утра до обеда. Хорошо подходит почти всем растениям, кроме тенелюбивых."],
-    SW: ["DIRECT",  "Солнце после обеда и вечером, самое жаркое время. Нежным растениям нужна лёгкая тюль."],
-    E:  ["BRIGHT",  "Мягкое утреннее солнце, потом рассеянный свет. Отличное окно для большинства комнатных растений."],
-    W:  ["BRIGHT",  "Солнце во второй половине дня, ярко и тепло. Летом вечером бывает жарко."],
-    NE: ["PARTIAL", "Немного солнца рано утром, остальное время рассеянный свет. Подходит для полутени."],
-    NW: ["PARTIAL", "Немного вечернего солнца летом, в остальное время рассеянный свет."],
-    N:  ["SHADE",   "Прямого солнца почти не бывает. Подходит теневыносливым растениям, светолюбивым нужна досветка."]
-  };
-  var LIGHT_NAME = { DIRECT: "Прямое солнце", BRIGHT: "Яркий рассеянный", PARTIAL: "Полутень", SHADE: "Тень" };
-
-  function fromAzimuth(a) {
-    a = ((a % 360) + 360) % 360;
-    return DIRS[Math.floor((a + 22.5) / 45) % 8];
-  }
-
-  var dial = document.getElementById("dial");
-  var needle = document.getElementById("needle");
-  var hemi = document.getElementById("hemi");
-  var current = DIRS[3];
-  var needleAngle = current.az;
-
-  DIRS.forEach(function (d) {
-    var b = document.createElement("button");
-    b.className = "dir-btn";
-    b.type = "button";
-    b.textContent = d.short;
-    b.setAttribute("role", "radio");
-    b.setAttribute("aria-label", d.title);
-    var r = 41, rad = (d.az - 90) * Math.PI / 180;
-    b.style.left = (50 + r * Math.cos(rad)) + "%";
-    b.style.top = (50 + r * Math.sin(rad)) + "%";
-    b.addEventListener("click", function () { select(d); });
-    d.el = b;
-    dial.appendChild(b);
-  });
-
-  // стрелки на клавиатуре переключают стороны
-  dial.addEventListener("keydown", function (e) {
-    var i = DIRS.indexOf(current);
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") i = (i + 1) % 8;
-    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") i = (i + 7) % 8;
-    else return;
-    e.preventDefault();
-    select(DIRS[i]);
-    DIRS[i].el.focus();
-  });
-  hemi.addEventListener("change", function () { render(); });
-
-  function select(d) {
-    // поворачиваем стрелку по кратчайшему пути
-    var diff = ((d.az - needleAngle) % 360 + 540) % 360 - 180;
-    needleAngle += diff;
-    current = d;
-    render();
-  }
-
-  function render() {
-    DIRS.forEach(function (d) {
-      var on = d === current;
-      d.el.setAttribute("aria-checked", String(on));
-      d.el.tabIndex = on ? 0 : -1;
-    });
-    needle.style.transform = "rotate(" + needleAngle + "deg)";
-
-    var effective = hemi.checked ? fromAzimuth(180 - current.az) : current;
-    var v = VERDICT[effective.id];
-    var light = v[0];
-    document.getElementById("v-dir").textContent = current.title;
-    var badge = document.getElementById("v-light");
-    badge.textContent = LIGHT_NAME[light];
-    badge.setAttribute("data-l", light);
-    document.getElementById("v-text").textContent = v[1];
-
-    var fit = PLANTS.filter(function (p) { return p.light.indexOf(light) !== -1; });
-    document.getElementById("v-count").textContent = fit.length;
-    var ul = document.getElementById("v-plants");
-    ul.innerHTML = "";
-    fit.forEach(function (p, i) {
-      var li = document.createElement("li");
-      li.textContent = p.nameRu;
-      li.style.animationDelay = Math.min(i * 18, 500) + "ms";
-      ul.appendChild(li);
-    });
-  }
-  render();
-
   /* ---------- Библиотека: поиск и фильтр ---------- */
   var CACTI = ["aloe_vera", "crassula", "echeveria", "haworthia", "lithops", "echinocactus", "opuntia", "agave", "sansevieria_cylindrica"];
   var FLOWERS = ["spathiphyllum", "phalaenopsis", "anthurium", "hibiscus", "saintpaulia", "gloxinia", "begonia", "pelargonium",
     "cyclamen", "kalanchoe", "hoya", "passiflora", "medinilla", "achimenes", "streptocarpus", "clivia", "strelitzia"];
   var LIGHT_ICON = { DIRECT: "☀️", BRIGHT: "🌤", PARTIAL: "⛅", SHADE: "☁️" };
+  var LIGHT_NAME = { DIRECT: "Прямое солнце", BRIGHT: "Яркий рассеянный", PARTIAL: "Полутень", SHADE: "Тень" };
 
   function norm(s) { return String(s || "").toLowerCase().replace(/ё/g, "е").trim(); }
   function icon(p) { return CACTI.indexOf(p.id) !== -1 ? "🌵" : FLOWERS.indexOf(p.id) !== -1 ? "🌸" : "🌿"; }
